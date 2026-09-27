@@ -20,7 +20,7 @@ public interface ITmdbClient
     /// <summary>
     /// Returns a single movie with its trailer (TMDB's /movie/{id} endpoint with appended videos).
     /// </summary>
-    Task<MovieDetails> GetMovieDetailsAsync(int id, CancellationToken cancellationToken);
+    Task<MovieDetail> GetMovieDetailsAsync(int id, CancellationToken cancellationToken);
 
 
 }

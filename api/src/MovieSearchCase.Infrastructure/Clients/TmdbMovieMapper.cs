@@ -36,7 +36,7 @@ internal static class TmdbMovieMapper
         TotalResults = response.TotalResults,
     };
 
-      public static MovieDetails ToDomainModel(this TmdbMovieDetails tmdbMovie) => new()
+      public static MovieDetail ToDomainModel(this TmdbMovieDetails tmdbMovie) => new()
     {
         Id = tmdbMovie.Id,
         Title = tmdbMovie.Title,

@@ -74,7 +74,7 @@ public class TmdbClient : ITmdbClient
         return response.ToDomainModel();
     }
 
-public async Task<MovieDetails> GetMovieDetailsAsync(int id, CancellationToken cancellationToken)
+public async Task<MovieDetail> GetMovieDetailsAsync(int id, CancellationToken cancellationToken)
     {
         TmdbMovieDetails? response;
 

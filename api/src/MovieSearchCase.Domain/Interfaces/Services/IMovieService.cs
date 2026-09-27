@@ -11,7 +11,7 @@ public interface IMovieService
 
     Task<PagedResults<Movie>> SearchAsync(string query, int page, CancellationToken cancellationToken);
     
-    Task<MovieDetails> GetDetailsAsync(int id, CancellationToken cancellationToken);
+    Task<MovieDetail> GetDetailsAsync(int id, CancellationToken cancellationToken);
 
 
 }
