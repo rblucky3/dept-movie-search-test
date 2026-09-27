@@ -17,4 +17,7 @@ public class MovieService : IMovieService
         _tmdbClient.GetTrendingMoviesAsync(cancellationToken);
 
     // TODO(candidate): add a search method here that calls ITmdbClient's new search method.
+    public Task<PagedResult<Movie>> SearchAsync(string query, int page, CancellationToken cancellationToken) =>
+        _tmdbClient.SearchMoviesAsync(query.Trim(), page, cancellationToken);
+
 }
