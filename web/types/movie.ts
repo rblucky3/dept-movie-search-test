@@ -13,3 +13,12 @@ export interface PagedResponse<T> {
   totalPages: number;
   totalResults: number;
 }
+
+
+export interface MovieDetail extends Movie {
+  tagline: string | null;
+  /** Runtime in minutes. */
+  runtime: number | null;
+  genres: string[];
+  youTubeTrailerKey: string | null;
+}

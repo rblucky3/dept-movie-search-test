@@ -1,6 +1,7 @@
 import "server-only";
+import { cache } from "react";
 
-import type { Movie, PagedResponse} from "~/types/movie";
+import type { Movie, PagedResponse,MovieDetail} from "~/types/movie";
 
 
 const API_BASE_URL = process.env.NEXT_PUBLIC_API_BASE_URL;
@@ -56,3 +57,11 @@ export function searchMovies(
     next: { revalidate: 300 },
   });
 }
+
+/**
+ * A movie with trailer. Wrapped in `cache` so the page
+ */
+export const getMovieDetails = cache(
+  (id: number): Promise<MovieDetail> =>
+    apiFetch<MovieDetail>(`/movies/${id}`, { next: { revalidate: 3600 } }),
+);
