@@ -1,4 +1,7 @@
+import { Suspense } from "react";
+
 import { SearchBar } from "~/components/SearchBar";
+import { SearchResults, SearchResultsSkeleton } from "~/components/SearchResults";
 import { TrendingGrid } from "~/components/TrendingGrid";
 import { getTrendingMovies } from "~/lib/api";
 
@@ -7,8 +10,23 @@ import { getTrendingMovies } from "~/lib/api";
 // during `next build` in CI.
 export const dynamic = "force-dynamic";
 
-export default async function HomePage() {
-  const trendingMovies = await getTrendingMovies();
+interface HomePageProps {
+  searchParams: Promise<{ query?: string | string[]; page?: string | string[] }>;
+}
+
+function first(value: string | string[] | undefined) {
+  return Array.isArray(value) ? value[0] : value;
+}
+
+function parsePage(value: string | undefined) {
+  const page = Number(value);
+  return Number.isInteger(page) && page >= 1 ? page : 1;
+}
+
+export default async function HomePage({ searchParams }: HomePageProps) {
+  const params = await searchParams;
+  const query = first(params.query)?.trim() ?? "";
+  const page = parsePage(first(params.page));
 
   return (
     <main className="mx-auto flex max-w-6xl flex-col gap-8 px-4 py-10">
@@ -19,12 +37,32 @@ export default async function HomePage() {
         <SearchBar />
       </header>
 
-      <section className="flex flex-col gap-4">
-        <h2 className="text-lg font-medium text-foreground">
-          Trending this week
-        </h2>
-        <TrendingGrid movies={trendingMovies} />
-      </section>
+      {query ? (
+        <section aria-labelledby="search-heading" className="flex flex-col gap-4">
+          <h2 id="search-heading" className="text-lg font-medium text-foreground">
+            Search results
+          </h2>
+          {/* Keyed so the fallback shows again for every new query/page, not just the first. */}
+          <Suspense key={`${query}:${page}`} fallback={<SearchResultsSkeleton />}>
+            <SearchResults query={query} page={page} />
+          </Suspense>
+        </section>
+      ) : (
+        <TrendingSection />
+      )}
     </main>
+  );
+}
+
+async function TrendingSection() {
+  const trendingMovies = await getTrendingMovies();
+
+  return (
+    <section aria-labelledby="trending-heading" className="flex flex-col gap-4">
+      <h2 id="trending-heading" className="text-lg font-medium text-foreground">
+        Trending this week
+      </h2>
+      <TrendingGrid movies={trendingMovies} />
+    </section>
   );
 }
