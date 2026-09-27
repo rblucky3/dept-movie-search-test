@@ -41,5 +41,15 @@ public class MoviesController : ApiControllerBase
     public async Task<IActionResult> Search([FromQuery] string? query, [FromQuery] int page = 1) =>
         await _requestHandlerFactory.SearchMovies(query ?? string.Empty, page).HandleAsync(Request);
 
+   /// <summary>
+    /// Returns a single movie's details, including its YouTube trailer key when available.
+    /// </summary>
+    [HttpGet("{id:int}")]
+    [SwaggerOperation(Summary = "Get movie details", OperationId = "GetMovieDetails")]
+    [SwaggerResponse(StatusCodes.Status200OK, "The movie's details", typeof(Models.Movies.MovieDetail))]
+    [SwaggerResponse(StatusCodes.Status404NotFound, "No movie with this id", typeof(ProblemDetails))]
+    public async Task<IActionResult> GetDetails([FromRoute] int id) =>
+        await _requestHandlerFactory.GetMovieDetails(id).HandleAsync(Request);
+
 
 }
