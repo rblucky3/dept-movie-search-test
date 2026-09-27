@@ -33,4 +33,27 @@ public class MovieServiceTests
 
         result.Should().BeEquivalentTo(expectedMovies);
     }
+
+        [Fact]
+    public async Task SearchAsyncShouldTrimQueryAndReturnResultFromTmdbClient()
+    {
+        var expectedResult = new PagedResults<Movie>
+        {
+            Results = [new Movie { Id = 603, Title = "The Matrix" }],
+            Page = 1,
+            TotalPages = 1,
+            TotalResults = 1,
+        };
+
+        var tmdbClientMock = new Mock<ITmdbClient>();
+        tmdbClientMock
+            .Setup(client => client.SearchMoviesAsync("matrix", 1, It.IsAny<CancellationToken>()))
+            .ReturnsAsync(expectedResult);
+
+        var movieService = new MovieService(tmdbClientMock.Object);
+
+        var result = await movieService.SearchAsync("  matrix ", 1, CancellationToken.None);
+
+        result.Should().BeSameAs(expectedResult);
+    }
 }
