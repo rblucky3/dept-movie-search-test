@@ -7,3 +7,9 @@ export interface Movie {
   voteAverage: number;
   releaseDate: string | null;
 }
+export interface PagedResponse<T> {
+  results: T[];
+  page: number;
+  totalPages: number;
+  totalResults: number;
+}
