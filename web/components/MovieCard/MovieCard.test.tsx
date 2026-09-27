@@ -22,5 +22,6 @@ describe("MovieCard", () => {
     expect(screen.getByText("A Trending Movie")).toBeInTheDocument();
     expect(screen.getByText("★ 8.1")).toBeInTheDocument();
     expect(screen.getByText("2024")).toBeInTheDocument();
+    expect(screen.getByRole("link")).toHaveAttribute("href", "/movies/1");
   });
 });
