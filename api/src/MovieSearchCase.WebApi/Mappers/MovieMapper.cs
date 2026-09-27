@@ -1,4 +1,8 @@
+using MovieSearchCase.Domain.Entities;
+using MovieSearchCase.WebApi.Models;
+
 namespace MovieSearchCase.WebApi.Mappers;
+
 
 internal static class MovieMapper
 {
@@ -11,5 +15,13 @@ internal static class MovieMapper
         BackdropPath = movie.BackdropPath,
         VoteAverage = movie.VoteAverage,
         ReleaseDate = movie.ReleaseDate,
+    };
+
+    public static PagedResponse<Models.Movies.Movie> ToApiModel(this PagedResults<Domain.Entities.Movie> result) => new()
+    {
+        Results = result.Results.Select(ToApiModel).ToList(),
+        Page = result.Page,
+        TotalPages = result.TotalPages,
+        TotalResults = result.TotalResults,
     };
 }

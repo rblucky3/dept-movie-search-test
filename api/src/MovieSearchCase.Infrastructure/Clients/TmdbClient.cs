@@ -1,3 +1,4 @@
+using System.Net;
 using System.Net.Http.Json;
 using MovieSearchCase.Domain.Entities;
 using MovieSearchCase.Domain.Exceptions;

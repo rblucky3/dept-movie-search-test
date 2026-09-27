@@ -5,6 +5,11 @@ namespace MovieSearchCase.Infrastructure.Clients;
 
 internal static class TmdbMovieMapper
 {
+      /// <summary>
+    /// TMDB rejects any page above 500, regardless of what total_pages reports.
+    /// </summary>
+    public const int MaxPage = 500;
+    
     public static Movie ToDomainModel(this TmdbMovie tmdbMovie) => new()
     {
         Id = tmdbMovie.Id,
@@ -22,4 +27,13 @@ internal static class TmdbMovieMapper
             ? releaseDate
             : null,
     };
+
+    public static PagedResults<Movie> ToDomainModel(this TmdbPagedResponse<TmdbMovie> response) => new()
+    {
+        Results = response.Results.Select(ToDomainModel).ToList(),
+        Page = response.Page,
+        TotalPages = Math.Min(response.TotalPages, MaxPage),
+        TotalResults = response.TotalResults,
+    };
+
 }
