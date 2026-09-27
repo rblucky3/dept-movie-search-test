@@ -24,4 +24,22 @@ internal static class MovieMapper
         TotalPages = result.TotalPages,
         TotalResults = result.TotalResults,
     };
+
+
+    public static Models.Movies.MovieDetail ToApiModel(this Domain.Entities.MovieDetail movie) => new()
+    {
+        Id = movie.Id,
+        Title = movie.Title,
+        Overview = movie.Overview,
+        PosterPath = movie.PosterPath,
+        BackdropPath = movie.BackdropPath,
+        VoteAverage = movie.VoteAverage,
+        ReleaseDate = movie.ReleaseDate,
+        Tagline = movie.Tagline,
+        Runtime = movie.Runtime,
+        Genres = movie.Genres,
+        YouTubeTrailerKey = movie.YouTubeTrailerKey,
+    };
+
+
 }
