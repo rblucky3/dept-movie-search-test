@@ -17,4 +17,10 @@ public interface ITmdbClient
     /// </summary>
     Task<PagedResults<Movie>> SearchMoviesAsync(string query, int page, CancellationToken cancellationToken);
 
+    /// <summary>
+    /// Returns a single movie with its trailer (TMDB's /movie/{id} endpoint with appended videos).
+    /// </summary>
+    Task<MovieDetails> GetMovieDetailsAsync(int id, CancellationToken cancellationToken);
+
+
 }

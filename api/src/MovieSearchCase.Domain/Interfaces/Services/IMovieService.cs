@@ -9,6 +9,9 @@ public interface IMovieService
 {
     Task<IReadOnlyList<Movie>> GetTrendingAsync(CancellationToken cancellationToken);
 
-     Task<PagedResults<Movie>> SearchAsync(string query, int page, CancellationToken cancellationToken);
+    Task<PagedResults<Movie>> SearchAsync(string query, int page, CancellationToken cancellationToken);
+    
+    Task<MovieDetails> GetDetailsAsync(int id, CancellationToken cancellationToken);
+
 
 }
