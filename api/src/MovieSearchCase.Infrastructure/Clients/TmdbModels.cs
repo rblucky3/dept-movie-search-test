@@ -45,3 +45,53 @@ public class TmdbMovie
     [JsonPropertyName("release_date")]
     public string? ReleaseDate { get; init; }
 }
+
+
+
+public class TmdbMovieDetails : TmdbMovie
+{
+    [JsonPropertyName("tagline")]
+    public string? Tagline { get; init; }
+
+    [JsonPropertyName("runtime")]
+    public int? Runtime { get; init; }
+
+    [JsonPropertyName("genres")]
+    public IReadOnlyList<TmdbGenre> Genres { get; init; } = [];
+
+    /// <summary>
+    /// Only populated when requested with <c>append_to_response=videos</c>.
+    /// </summary>
+    [JsonPropertyName("videos")]
+    public TmdbVideoList? Videos { get; init; }
+}
+
+public class TmdbGenre
+{
+    [JsonPropertyName("id")]
+    public int Id { get; init; }
+
+    [JsonPropertyName("name")]
+    public required string Name { get; init; }
+}
+
+public class TmdbVideoList
+{
+    [JsonPropertyName("results")]
+    public IReadOnlyList<TmdbVideo> Results { get; init; } = [];
+}
+
+public class TmdbVideo
+{
+    [JsonPropertyName("key")]
+    public required string Key { get; init; }
+
+    [JsonPropertyName("site")]
+    public required string Site { get; init; }
+
+    [JsonPropertyName("type")]
+    public required string Type { get; init; }
+
+    [JsonPropertyName("official")]
+    public bool Official { get; init; }
+}
